@@ -4,10 +4,10 @@ import {Header} from '../../components'
 import { colors } from '../../utils';
 import {Buttons, Gap, Input} from './../../components';
 
-export default function Register() {
+export default function Register({navigation}) {
   return (
     <View style={styles.page}>
-      <Header title="Daftar Akun" />
+      <Header title="Daftar Akun" onPress={() => navigation.goBack()} />
       <View style={styles.container}>
         <Input label="Fullname" />
         <Gap height={24} />
@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
   },
   container : {
     padding : 40,
-    paddingTop : 0
+    paddingTop : 0,
+    backgroundColor : colors.white
   }
 })

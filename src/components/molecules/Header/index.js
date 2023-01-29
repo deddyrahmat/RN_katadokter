@@ -2,12 +2,13 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { IconBackDark } from '../../../assets'
 import { colors } from '../../../utils'
-import { Gap } from '../../atoms'
+import { Buttons, Gap } from '../../atoms'
 
-export default function Header({title}) {
+export default function Header({title, onPress}) {
   return (
     <View style={styles.container}>
-      <IconBackDark />
+      {/* <IconBackDark /> */}
+      <Buttons type="icon-only" icon="back-dark" onPress={onPress} />
       <Text style={styles.title}>{title}</Text>
       {/* agar title header berada ditengah, sesuaikan ukuran width gap diakhir */}
       <Gap width={24} />
