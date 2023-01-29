@@ -3,7 +3,7 @@ import { ImageBackground, StyleSheet, Text, View } from 'react-native'
 import { ILGetStarted, ILLogo } from '../../assets'
 import {Buttons, Gap} from './../../components';
 
-export default function GetStarted() {
+export default function GetStarted({navigation}) {
   return (
     <ImageBackground source={ILGetStarted} style={styles.page}>
       <View>
@@ -11,9 +11,9 @@ export default function GetStarted() {
         <Text style={styles.title}>Konsultasi dengan dokter jadi lebih mudah & fleksibel</Text>
       </View>
       <View>
-        <Buttons title="Get Started" />
+        <Buttons title="Get Started" onPress={() => navigation.navigate("Register")} />
         <Gap height={16} />
-        <Buttons type="secondary" title="Sign In" />
+        <Buttons type="secondary" title="Sign In" onPress={() => navigation.navigate("Login")} />
       </View>
     </ImageBackground>
   )
