@@ -17,7 +17,7 @@ export default function Register({navigation}) {
         <Gap height={24} />
         <Input label="Password" />
         <Gap height={40} />
-        <Buttons title="Continue" />
+        <Buttons title="Continue" onPress={() => navigation.navigate('UploadPhoto')} />
       </View>
     </View>
   )
@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
   container : {
     padding : 40,
     paddingTop : 0,
-    backgroundColor : colors.white
+    backgroundColor : colors.white,
+    flex : 1
   }
 })
