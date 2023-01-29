@@ -1,7 +1,7 @@
 import { StyleSheet, Text } from 'react-native'
 import React from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { colors } from '../../../utils'
+import { colors, fonts } from '../../../utils'
 import IconOnly from './IconOnly'
 
 export default function Buttons({title, type, onPress, icon}) {
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     }
   },
   text : (type) => ({
-    fontFamily : "Nunito-SemiBold",
+    fontFamily : fonts.primary[600],
     color : type === "secondary" ? '#000' : colors.white,
     fontSize : 18,
     textAlign : 'center'
