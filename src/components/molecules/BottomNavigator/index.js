@@ -37,15 +37,13 @@ export default function BottomNavigator({state, descriptors, navigation}) {
         };
 
         return (
-          <>
-            <TabItems
-              key={index}
-              title={label}
-              active={isFocused}
-              onPress={onPress}
-              onLongPress={onLongPress}
-            />
-          </>
+          <TabItems
+            key={index}
+            title={label}
+            active={isFocused}
+            onPress={onPress}
+            onLongPress={onLongPress}
+          />
         );
       })}
     </View>
