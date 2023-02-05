@@ -3,6 +3,7 @@ import React from 'react'
 import {ILHospitalBG} from '../../assets/illustration'
 import { colors, fonts } from './../../utils';
 import { ListHospitals } from '../../components';
+import { DummyHospital1, DummyHospital2, DummyHospital3 } from '../../assets';
 
 export default function Hospitals() {
   return (
@@ -13,9 +14,9 @@ export default function Hospitals() {
     </ImageBackground>
     {/* <ScrollView showsVerticalScrollIndicator={false}> */}
       <View style={styles.content}>
-        <ListHospitals />
-        <ListHospitals />
-        <ListHospitals />
+        <ListHospitals name="Rumah Sakit Citra Bunga Merdeka" address="Jln. Surya Sejahtera 20" pic={DummyHospital1} />
+        <ListHospitals name="Rumah Sakit Anak Happy Family & Kids" address="Jln. Surya Sejahtera 20" pic={DummyHospital2} />
+        <ListHospitals name="Rumah Sakit Jiwa Tingkatan Paling Atas" address="Jln. Surya Sejahtera 20" pic={DummyHospital3} />
       </View>
     {/* </ScrollView> */}
     </View>
