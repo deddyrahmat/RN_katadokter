@@ -4,12 +4,12 @@ import { IconBackDark } from '../../../assets'
 import { colors, fonts } from '../../../utils'
 import { Buttons, Gap } from '../../atoms'
 
-export default function Header({title, onPress}) {
+export default function Header({title,type, onPress}) {
   return (
-    <View style={styles.container}>
+    <View style={styles.container(type)}>
       {/* <IconBackDark /> */}
-      <Buttons type="icon-only" icon="back-dark" onPress={onPress} />
-      <Text style={styles.title}>{title}</Text>
+      <Buttons type="icon-only" icon={type === 'dark' ? "back-light" : "back-dark"} onPress={onPress} />
+      <Text style={styles.title(type)}>{title}</Text>
       {/* agar title header berada ditengah, sesuaikan ukuran width gap diakhir */}
       <Gap width={24} />
     </View>
@@ -17,18 +17,22 @@ export default function Header({title, onPress}) {
 }
 
 const styles = StyleSheet.create({
-  container : {
-    flexDirection : 'row',
-    paddingVertical : 30,
-    paddingHorizontal : 16,
-    alignItems : 'center',
-    backgroundColor : colors.white
-  },
-  title : {
+  container : (type) => (
+    {
+      flexDirection : 'row',
+      paddingVertical : 30,
+      paddingHorizontal : 16,
+      alignItems : 'center',
+      backgroundColor : type === 'dark' ? colors.secondary : colors.white,
+      borderBottomLeftRadius : type === 'dark' ? 20 : 0,
+      borderBottomRightRadius : type === 'dark' ? 20 : 0,
+    }
+  ),
+  title : (type) => ({
     flex : 1,
-    color : colors.text.primary,
+    color : type === 'dark' ? colors.white : colors.text.primary,
     fontFamily : fonts.primary[600],
     fontSize : 20,
     textAlign : 'center',
-  }
+  }) 
 })
