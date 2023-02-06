@@ -1,13 +1,13 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { IconNext } from '../../../assets';
 
 import { colors, fonts } from '../../../utils';
 
-export default function ListDoctor({avatar, name, desc, type}) {
+export default function ListDoctor({avatar, name, desc, type, onPress}) {
   
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <View style={styles.wrapperDoctor}>
         <Image source={avatar} style={styles.avatar} />
         <View style={styles.content}>
@@ -16,7 +16,7 @@ export default function ListDoctor({avatar, name, desc, type}) {
         </View>
         {type === 'next' && <IconNext />}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
