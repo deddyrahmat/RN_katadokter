@@ -3,8 +3,13 @@ import React from 'react'
 import { IconBackDark } from '../../../assets'
 import { colors, fonts } from '../../../utils'
 import { Buttons, Gap } from '../../atoms'
+import DarkProfile from './DarkProfile'
 
 export default function Header({title,type, onPress}) {
+
+  if(type === 'dark-profile') {
+    return <DarkProfile />
+  }
   return (
     <View style={styles.container(type)}>
       {/* <IconBackDark /> */}

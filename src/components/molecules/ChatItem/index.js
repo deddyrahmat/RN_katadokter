@@ -4,7 +4,7 @@ import React from 'react'
 export default function ChatItem() {
   return (
     <View>
-      <Text>ChatItem</Text>
+      <Text style={{color : 'red'}}>ChatItem</Text>
     </View>
   )
 }
