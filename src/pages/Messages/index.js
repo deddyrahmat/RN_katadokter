@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {ListDoctor} from './../../components';
+import {List} from './../../components';
 import {colors, fonts} from '../../utils';
 import {DummyDoctor1, DummyDoctor2, DummyDoctor3} from '../../assets';
 
@@ -30,7 +30,7 @@ export default function Messages() {
       <View style={styles.container}>
         <Text style={styles.title}>Messages</Text>
         {doctor.map(doc => (
-          <ListDoctor
+          <List
             avatar={doc.avatar}
             desc={doc.desc}
             name={doc.name}
