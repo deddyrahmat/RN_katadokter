@@ -9,7 +9,7 @@ export default function Chatting() {
       <Header type="dark-profile" title="Nairobi Putri Saja" />
       <View style={styles.content}>
         <Text style={styles.chatDate}>20/02/2023</Text>
-        <ChatItem />
+        <ChatItem isMe />
         <ChatItem />
         <ChatItem />
       </View>
