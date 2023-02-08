@@ -1,23 +1,41 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React,{useState} from 'react'
+import { StyleSheet, ScrollView, View } from 'react-native'
 import {Header} from '../../components'
-import { colors } from '../../utils';
+import { colors, useForm } from '../../utils';
 import {Buttons, Gap, Input} from './../../components';
 
 export default function Register({navigation}) {
+  // const [fullname, setFullname] = useState('');
+  // const [profesion, setProfesion] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+
+  const [form, setForm] = useForm({
+    fullname : '',
+    profession : '',
+    email : '',
+    password : ''
+  })
+
+  const onContinue= () => {
+    console.log(form)
+    // () => navigation.navigate('UploadPhoto')
+  }
   return (
     <View style={styles.page}>
       <Header title="Daftar Akun" onPress={() => navigation.goBack()} />
       <View style={styles.container}>
-        <Input label="Fullname" />
+        <ScrollView showsVerticalScrollIndicator={false}>
+        <Input label="Fullname" value={form.fullname} onChangeText={value => setForm('fullname',value)} />
         <Gap height={24} />
-        <Input label="Pekerjaan" />
+        <Input label="Pekerjaan" value={form.profesion} onChangeText={value => setForm('profession',value)} />
         <Gap height={24} />
-        <Input label="Email Address" />
+        <Input label="Email Address" value={form.email} onChangeText={value => setForm('email',value)} />
         <Gap height={24} />
-        <Input label="Password" />
+        <Input label="Password" value={form.password} onChangeText={value => setForm('password',value)} secureTextEntry={true} />
         <Gap height={40} />
-        <Buttons title="Continue" onPress={() => navigation.navigate('UploadPhoto')} />
+        <Buttons title="Continue" onPress={onContinue} />
+        </ScrollView>
       </View>
     </View>
   )
