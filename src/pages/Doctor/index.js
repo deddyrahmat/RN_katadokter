@@ -8,7 +8,7 @@ import {
   RatedDoctor,
 } from '../../components';
 import {colors, fonts} from '../../utils';
-import { JSONCategoryDoctor } from '../../assets';
+import { DummyDoctor1, DummyDoctor2, DummyDoctor3, JSONCategoryDoctor } from '../../assets';
 
 export default function Doctor({navigation}) {
   return (
@@ -37,9 +37,9 @@ export default function Doctor({navigation}) {
           </View>
           <View style={styles.wrapperSection}>
             <Text style={styles.sectionLabel}>Top Rated Doctors</Text>
-            <RatedDoctor />
-            <RatedDoctor />
-            <RatedDoctor />
+            <RatedDoctor name="Alexa Cuys" desc="Dokter Anak" avatar={DummyDoctor1} onPress={() => navigation.navigate("DoctorProfile")} />
+            <RatedDoctor name="Budi Gunawan" desc="Dokter Gigi" avatar={DummyDoctor2} onPress={() => navigation.navigate("DoctorProfile")} />
+            <RatedDoctor name="Ana Syalala" desc="Dokter Anak" avatar={DummyDoctor3} onPress={() => navigation.navigate("DoctorProfile")} />
             <Text style={styles.sectionLabel}>Good News</Text>
           </View>
           <NewsItem />
@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
+    overflow : 'hidden'
   },
   wrapperSection: {paddingHorizontal: 16},
   welcome: {
