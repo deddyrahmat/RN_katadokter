@@ -2,12 +2,12 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
 import {DummyUser, IconRemovePhoto} from '../../../assets';
 import {colors, fonts} from '../../../utils';
-export default function Profile({name, desc}) {
+export default function Profile({name, desc, isRemove}) {
   return (
     <View style={styles.container}>
       <View style={styles.borderAvatar}>
         <Image source={DummyUser} style={styles.avatar} />
-        <IconRemovePhoto style={styles.removePhoto} />
+        {isRemove && <IconRemovePhoto style={styles.removePhoto} />}
       </View>
       {name && (
         <View>
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     justifyContent: 'center',
     alignItems: 'center',
-    position : 'relative'
+    position: 'relative',
   },
   avatar: {
     width: 110,
@@ -44,17 +44,17 @@ const styles = StyleSheet.create({
     fontFamily: fonts.primary[600],
     color: colors.text.primary,
     marginTop: 16,
-    textAlign : 'center'
+    textAlign: 'center',
   },
   job: {
-    textAlign : 'center',
+    textAlign: 'center',
     fontSize: 16,
     fontFamily: fonts.primary.normal,
     color: colors.text.secondary,
   },
-  removePhoto : {
-    position : 'absolute',
-    bottom : 8,
-    right : 6
-  }
+  removePhoto: {
+    position: 'absolute',
+    bottom: 8,
+    right: 6,
+  },
 });

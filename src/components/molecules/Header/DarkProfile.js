@@ -4,10 +4,10 @@ import { Buttons } from '../../atoms'
 import { colors, fonts } from '../../../utils'
 import { DummyDoctor9 } from '../../../assets'
 
-export default function DarkProfile() {
+export default function DarkProfile({onPress}) {
   return (
     <View style={styles.container}>
-    <Buttons type="icon-only" icon="back-light" />
+    <Buttons type="icon-only" icon="back-light" onPress={onPress} />
       <View style={styles.content}>
       <Text style={styles.name}>Nairobi putri saja</Text>
       <Text style={styles.job}>Dokter Anak</Text>

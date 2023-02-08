@@ -18,9 +18,9 @@ export default function UploadPhoto({navigation}) {
           <Text style={styles.job}>Product Designer</Text>
         </View>
         <View>
-          <Buttons title="Upload and Continue" type="primary" />
+          <Buttons title="Upload and Continue" type="primary" onPress={() => navigation.replace("MainApp")} />
           <Gap height={30} />
-          <Link title="Skip for this" align="center" size={16} />
+          <Link title="Skip for this" align="center" size={16} onPress={() => navigation.replace("MainApp")} />
         </View>
       </View>
     </View>

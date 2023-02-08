@@ -14,7 +14,7 @@ export default function GetStarted({navigation}) {
       <View>
         <Buttons title="Get Started" onPress={() => navigation.navigate("Register")} />
         <Gap height={16} />
-        <Buttons type="secondary" title="Sign In" onPress={() => navigation.navigate("Login")} />
+        <Buttons type="secondary" title="Sign In" onPress={() => navigation.replace("Login")} />
       </View>
     </ImageBackground>
   )

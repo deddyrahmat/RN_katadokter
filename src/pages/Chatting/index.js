@@ -3,10 +3,10 @@ import React from 'react';
 import {ChatItem, Header, InputChat} from './../../components/';
 import {colors, fonts} from '../../utils';
 
-export default function Chatting() {
+export default function Chatting({navigation}) {
   return (
     <View style={styles.page}>
-      <Header type="dark-profile" title="Nairobi Putri Saja" />
+      <Header type="dark-profile" title="Nairobi Putri Saja" onPress={() => navigation.goBack()} />
       <View style={styles.content}>
         <Text style={styles.chatDate}>20/02/2023</Text>
         <ChatItem isMe />

@@ -4,7 +4,7 @@ import {List} from './../../components';
 import {colors, fonts} from '../../utils';
 import {DummyDoctor1, DummyDoctor2, DummyDoctor3} from '../../assets';
 
-export default function Messages() {
+export default function Messages({navigation}) {
   const [doctor, setDoctor] = useState([
     {
       id: 1,
@@ -35,6 +35,7 @@ export default function Messages() {
             desc={doc.desc}
             name={doc.name}
             key={`list-doctor-${doc.id}`}
+            onPress={() => navigation.navigate("Chatting")}
           />
         ))
         }

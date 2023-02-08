@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {Buttons, Gap, Header, Profile, ProfileItem} from '../../components';
-import { colors } from '../../utils';
+import {colors} from '../../utils';
 
 export default function DoctorProfile({navigation}) {
   return (
@@ -13,14 +13,19 @@ export default function DoctorProfile({navigation}) {
       <ProfileItem label="Tempat Praktik" value="Rumah Sakit Umum, Bandung" />
       <ProfileItem label="No. STR" value="0000116622081996" />
       <Gap height={23} />
-      <Buttons title="Start Consultation" />
+      <View style={styles.btnStart}>
+        <Buttons title="Start Consultation" onPress={() => navigation.navigate("Chatting")} />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-    page : {
-        flex : 1,
-        backgroundColor : colors.white,
-    }
+  page: {
+    flex: 1,
+    backgroundColor: colors.white,
+  },
+  btnStart: {
+    paddingHorizontal : 40
+  }
 });
