@@ -7,7 +7,9 @@ const mainColors = {
     dark4 : '#EDEEF0',
     grey1 : '#7D8797',
     grey2 : '#E9E9E9',
-    blue : '#0066CB'
+    blue : '#0066CB',
+    black1 : '#000',
+    black2 : 'rgba(0,0,0,0.5)'
 }
 
 export const colors = {
@@ -15,7 +17,7 @@ export const colors = {
     secondary : mainColors.dark1,
     disabled : mainColors.dark4,
     white : 'white',
-    black : 'black',
+    black : mainColors.black1,
     tertiery : mainColors.blue,
     text : {
         primary : mainColors.dark1,
@@ -35,5 +37,6 @@ export const colors = {
         }
     },
     border : mainColors.grey2,
-    cardLight : mainColors.green2
+    cardLight : mainColors.green2,
+    loadingBackground : mainColors.black2
 }
