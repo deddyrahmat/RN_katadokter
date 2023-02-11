@@ -5,6 +5,7 @@ import {colors, useForm} from '../../utils';
 import {Buttons, Gap, Input} from './../../components';
 import fire from '../../config/fire';
 import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 export default function Register({navigation}) {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,9 +18,9 @@ export default function Register({navigation}) {
   });
 
   const onContinue = () => {
-    setIsLoading(true);
     console.log(form);
     // () => navigation.navigate('UploadPhoto')
+    setIsLoading(true);
     const auth = getAuth(fire);
     createUserWithEmailAndPassword(auth, form.email, form.password)
       .then(userCredential => {
@@ -33,6 +34,12 @@ export default function Register({navigation}) {
         const errorCode = error.code;
         const errorMessage = error.message;
         setIsLoading(false);
+        showMessage({
+          message: errorMessage,
+          type: "default",
+          backgroundColor : colors.error,
+          color : colors.white
+        });
         console.log('errorMessage', errorMessage);
       });
   };
