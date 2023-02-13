@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import {StyleSheet, ScrollView, View} from 'react-native';
 import {Header, Loading} from '../../components';
-import {colors, useForm} from '../../utils';
+import {colors, storeData, useForm} from '../../utils';
 import {Buttons, Gap, Input} from './../../components';
 import fire from '../../config/fire';
 import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
 import { getDatabase, ref, set } from "firebase/database";
 import {showMessage} from 'react-native-flash-message';
+
 
 export default function Register({navigation}) {
   const [isLoading, setIsLoading] = useState(false);
@@ -37,8 +38,9 @@ export default function Register({navigation}) {
         const db = getDatabase(fire);
         set(ref(db, 'users/' + userCredential.user.uid + '/'), data);
         setIsLoading(false);
+        storeData('user',data);
         // console.log('user create', user);
-        // () => navigation.navigate('UploadPhoto')
+        navigation.navigate('UploadPhoto')
       })
       .catch(error => {
         const errorCode = error.code;

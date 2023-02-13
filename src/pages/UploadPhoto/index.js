@@ -1,24 +1,58 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React, {useState} from 'react';
+import { launchImageLibrary} from 'react-native-image-picker';
+import { showMessage } from "react-native-flash-message";
+
 import {Buttons, Gap, Header, Link} from '../../components';
-import {colors, fonts} from '../../utils';
-import {IconAddPhoto, ILNullPhoto} from '../../assets';
+import {colors, fonts, getData} from '../../utils';
+import {IconAddPhoto, IconRemovePhoto, ILNullPhoto} from '../../assets';
 
 export default function UploadPhoto({navigation}) {
+  const [photo, setPhoto] = useState(ILNullPhoto);
+  const [hasPhoto, setHasPhoto] = useState(false);
+  // console.log('getData', getData('user'))
+  const getImage = async () => {
+    try {
+      const result = await launchImageLibrary();
+      // console.log('result', result)
+      if (result.didCancel || result.errorCode || result.errorMessage || result.error) {
+        showMessage({
+          message: "Silahkan tentukan foto",
+          type: "default",
+          backgroundColor : colors.error,
+          color : colors.white
+        })
+      }else{
+        // console.log('result.assets[0].uri', result.assets[0].uri)
+        const source = {uri : result.assets[0].uri}
+        setPhoto(source)
+        setHasPhoto(true)
+      }
+    } catch (error) {
+      showMessage({
+        message: error,
+        type: "default",
+        backgroundColor : colors.error,
+        color : colors.white
+      })
+    }
+  }
+
+  // console.log('hasPhoto', hasPhoto)
   return (
     <View style={styles.page}>
       <Header title="Upload Photo" onPress={() => navigation.goBack()} />
       <View style={styles.container}>
         <View style={styles.profile}>
-          <View style={styles.wrapperPhoto}>
-            <Image source={ILNullPhoto} style={styles.photo} />
-            <IconAddPhoto style={styles.iconAdd} />
-          </View>
+          <TouchableOpacity style={styles.wrapperPhoto} onPress={() => getImage()}>
+            <Image source={photo} style={styles.photo} />
+            {hasPhoto ? <IconRemovePhoto style={styles.iconAdd} /> : <IconAddPhoto style={styles.iconAdd} />}
+          </TouchableOpacity>
           <Text style={styles.fullname}>Shayna Melinda</Text>
           <Text style={styles.job}>Product Designer</Text>
         </View>
         <View>
-          <Buttons title="Upload and Continue" type="primary" onPress={() => navigation.replace("MainApp")} />
+          <Buttons title="Upload and Continue" disable={!hasPhoto} type="primary" onPress={() => navigation.replace("MainApp")} />
           <Gap height={30} />
           <Link title="Skip for this" align="center" size={16} onPress={() => navigation.replace("MainApp")} />
         </View>
@@ -71,6 +105,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     width: 110,
     height: 110,
+    borderRadius : 110/2
   },
   iconAdd: {
     position: 'absolute',
