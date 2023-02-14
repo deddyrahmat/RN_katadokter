@@ -33,6 +33,7 @@ export default function Register({navigation}) {
           fullname: form.fullname,
           profession: form.profession,
           email: form.email,
+          uid : userCredential.user.uid
         };
 
         const db = getDatabase(fire);
@@ -40,7 +41,7 @@ export default function Register({navigation}) {
         setIsLoading(false);
         storeData('user',data);
         // console.log('user create', user);
-        navigation.navigate('UploadPhoto')
+        navigation.navigate('UploadPhoto', data);
       })
       .catch(error => {
         const errorCode = error.code;

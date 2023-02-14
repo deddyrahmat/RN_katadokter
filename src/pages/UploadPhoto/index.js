@@ -2,18 +2,24 @@ import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React, {useState} from 'react';
 import { launchImageLibrary} from 'react-native-image-picker';
 import { showMessage } from "react-native-flash-message";
+import fire from '../../config/fire';
+import { getDatabase, ref, update } from "firebase/database";
 
 import {Buttons, Gap, Header, Link} from '../../components';
-import {colors, fonts, getData} from '../../utils';
+import {colors, fonts, getData, storeData} from '../../utils';
 import {IconAddPhoto, IconRemovePhoto, ILNullPhoto} from '../../assets';
 
-export default function UploadPhoto({navigation}) {
+export default function UploadPhoto({navigation, route}) {
+  const {fullname,profession, uid} = route.params;
+
+  const [photoForDb, setPhotoForDb] = useState('');
   const [photo, setPhoto] = useState(ILNullPhoto);
   const [hasPhoto, setHasPhoto] = useState(false);
+
   // console.log('getData', getData('user'))
   const getImage = async () => {
     try {
-      const result = await launchImageLibrary();
+      const result = await launchImageLibrary({includeBase64 : true, quality: 0.5, maxWidth: 200, maxHeight: 200});
       // console.log('result', result)
       if (result.didCancel || result.errorCode || result.errorMessage || result.error) {
         showMessage({
@@ -23,7 +29,9 @@ export default function UploadPhoto({navigation}) {
           color : colors.white
         })
       }else{
-        // console.log('result.assets[0].uri', result.assets[0].uri)
+        setPhotoForDb(`data:${result.assets[0].type};base64, ${result.assets[0].base64}`);
+        
+        // console.log('result.assets[0].uri', result.assets)
         const source = {uri : result.assets[0].uri}
         setPhoto(source)
         setHasPhoto(true)
@@ -38,6 +46,15 @@ export default function UploadPhoto({navigation}) {
     }
   }
 
+  const uploadAndContinue = () => {
+    const db = getDatabase(fire);
+    update(ref(db, 'users/' + uid + '/'), {photo : photoForDb});
+    const data = route.params;
+    data.photo = photoForDb;
+    storeData('user', data);
+    navigation.replace("MainApp")
+  }
+
   // console.log('hasPhoto', hasPhoto)
   return (
     <View style={styles.page}>
@@ -48,11 +65,11 @@ export default function UploadPhoto({navigation}) {
             <Image source={photo} style={styles.photo} />
             {hasPhoto ? <IconRemovePhoto style={styles.iconAdd} /> : <IconAddPhoto style={styles.iconAdd} />}
           </TouchableOpacity>
-          <Text style={styles.fullname}>Shayna Melinda</Text>
-          <Text style={styles.job}>Product Designer</Text>
+          <Text style={styles.fullname}>{fullname}</Text>
+          <Text style={styles.job}>{profession}</Text>
         </View>
         <View>
-          <Buttons title="Upload and Continue" disable={!hasPhoto} type="primary" onPress={() => navigation.replace("MainApp")} />
+          <Buttons title="Upload and Continue" disable={!hasPhoto} type="primary" onPress={() => uploadAndContinue()} />
           <Gap height={30} />
           <Link title="Skip for this" align="center" size={16} onPress={() => navigation.replace("MainApp")} />
         </View>
