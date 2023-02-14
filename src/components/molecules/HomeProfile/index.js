@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import {DummyDoctor9, ILNullPhoto} from '../../../assets';
+import {ILNullPhoto} from '../../../assets';
 import { colors, fonts, getData } from './../../../utils';
 
 export default function HomeProfile({onPress}) {
@@ -13,7 +13,7 @@ export default function HomeProfile({onPress}) {
   useEffect(() => {
     getData('user').then(res => {
       const data = res;
-      data.photo = {uri : res.photo},
+      data.photo = {uri : res.photo};
       setProfile(data);
     }).catch((error) => console.log('error profile ', error));
   },[]);

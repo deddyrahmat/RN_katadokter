@@ -1,14 +1,22 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {DummyUser, IconRemovePhoto} from '../../../assets';
+import {IconRemovePhoto} from '../../../assets';
 import {colors, fonts} from '../../../utils';
-export default function Profile({name, desc, isRemove}) {
+export default function Profile({name, desc, photo, isRemove, onPress}) {
   return (
     <View style={styles.container}>
-      <View style={styles.borderAvatar}>
-        <Image source={DummyUser} style={styles.avatar} />
-        {isRemove && <IconRemovePhoto style={styles.removePhoto} />}
-      </View>
+      {isRemove && (
+        <TouchableOpacity style={styles.borderAvatar} onPress={onPress}>
+          <Image source={photo} style={styles.avatar} />
+          {isRemove && <IconRemovePhoto style={styles.removePhoto} />}
+        </TouchableOpacity>
+      )}
+      {!isRemove && (
+        <View style={styles.borderAvatar}>
+          <Image source={photo} style={styles.avatar} />
+          {isRemove && <IconRemovePhoto style={styles.removePhoto} />}
+        </View>
+      )}
       {name && (
         <View>
           <Text style={styles.name}>{name}</Text>
