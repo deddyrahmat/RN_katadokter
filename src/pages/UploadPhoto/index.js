@@ -1,12 +1,11 @@
 import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React, {useState} from 'react';
 import { launchImageLibrary} from 'react-native-image-picker';
-import { showMessage } from "react-native-flash-message";
 import fire from '../../config/fire';
 import { getDatabase, ref, update } from "firebase/database";
 
 import {Buttons, Gap, Header, Link} from '../../components';
-import {colors, fonts, getData, storeData} from '../../utils';
+import {colors, fonts, getData, showError, storeData} from '../../utils';
 import {IconAddPhoto, IconRemovePhoto, ILNullPhoto} from '../../assets';
 
 export default function UploadPhoto({navigation, route}) {
@@ -22,12 +21,7 @@ export default function UploadPhoto({navigation, route}) {
       const result = await launchImageLibrary({includeBase64 : true, quality: 0.5, maxWidth: 200, maxHeight: 200});
       // console.log('result', result)
       if (result.didCancel || result.errorCode || result.errorMessage || result.error) {
-        showMessage({
-          message: "Silahkan tentukan foto",
-          type: "default",
-          backgroundColor : colors.error,
-          color : colors.white
-        })
+        showError("Silahkan tentukan foto");
       }else{
         setPhotoForDb(`data:${result.assets[0].type};base64, ${result.assets[0].base64}`);
         
@@ -37,12 +31,7 @@ export default function UploadPhoto({navigation, route}) {
         setHasPhoto(true)
       }
     } catch (error) {
-      showMessage({
-        message: error,
-        type: "default",
-        backgroundColor : colors.error,
-        color : colors.white
-      })
+      showError(error.message);
     }
   }
 

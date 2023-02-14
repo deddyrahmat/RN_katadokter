@@ -2,10 +2,9 @@ import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {getDatabase, ref, update} from 'firebase/database';
-import {showMessage} from 'react-native-flash-message';
 
 import {Buttons, Gap, Header, Input, Profile} from '../../components';
-import {colors, getData, storeData} from '../../utils';
+import {colors, getData, showError, storeData} from '../../utils';
 import fire from '../../config/fire';
 import {ILNullPhoto} from '../../assets';
 import {onAuthStateChanged, getAuth, updatePassword} from 'firebase/auth';
@@ -47,12 +46,7 @@ export default function UpdateProfile({navigation}) {
     
     if (password.length > 0) {
       if (password.length < 6) {
-        showMessage({
-          message: 'Password kurang dari 6 karakter',
-          type: 'default',
-          backgroundColor: colors.error,
-          color: colors.white,
-        });
+        showError("Password kurang dari 6 karakter")
       } else {
         // update pass
         updateDataPassword();        
@@ -71,12 +65,7 @@ export default function UpdateProfile({navigation}) {
     onAuthStateChanged(auth, user => {
       if (user) {
         updatePassword(auth.currentUser, password).catch(err => {
-          showMessage({
-            message: err.message,
-            type: 'default',
-            backgroundColor: colors.error,
-            color: colors.white,
-          });
+          showError(err.message)
         });
       }
     });
@@ -96,12 +85,7 @@ export default function UpdateProfile({navigation}) {
         navigation.goBack('UserProfile');
       })
       .catch(err => {
-        showMessage({
-          message: err.message,
-          type: 'default',
-          backgroundColor: colors.error,
-          color: colors.white,
-        });
+        showError(err.message);
       });
   };
 
@@ -120,12 +104,7 @@ export default function UpdateProfile({navigation}) {
         result.errorMessage ||
         result.error
       ) {
-        showMessage({
-          message: 'Silahkan tentukan foto',
-          type: 'default',
-          backgroundColor: colors.error,
-          color: colors.white,
-        });
+        showError("Silahkan Tentukan Foto");
       } else {
         setPhotoForDb(
           `data:${result.assets[0].type};base64, ${result.assets[0].base64}`,
@@ -136,12 +115,7 @@ export default function UpdateProfile({navigation}) {
         setPhoto(source);
       }
     } catch (error) {
-      showMessage({
-        message: error,
-        type: 'default',
-        backgroundColor: colors.error,
-        color: colors.white,
-      });
+      showError(error.message);
     }
   };
 

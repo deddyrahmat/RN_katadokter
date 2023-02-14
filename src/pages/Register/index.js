@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
 import {StyleSheet, ScrollView, View} from 'react-native';
 import {Header, Loading} from '../../components';
-import {colors, storeData, useForm} from '../../utils';
+import {colors, showError, storeData, useForm} from '../../utils';
 import {Buttons, Gap, Input} from './../../components';
 import fire from '../../config/fire';
 import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
 import { getDatabase, ref, set } from "firebase/database";
-import {showMessage} from 'react-native-flash-message';
 
 
 export default function Register({navigation}) {
@@ -47,13 +46,7 @@ export default function Register({navigation}) {
         const errorCode = error.code;
         const errorMessage = error.message;
         setIsLoading(false);
-        showMessage({
-          message: errorMessage,
-          type: 'default',
-          backgroundColor: colors.error,
-          color: colors.white,
-        });
-        console.log('errorMessage', errorMessage);
+        showError(errorMessage)
       });
   };
   return (

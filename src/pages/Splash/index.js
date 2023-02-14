@@ -9,19 +9,22 @@ import fire from '../../config/fire';
 
 export default function Splash({navigation}) {
   useEffect(() => {
-    setTimeout(() => {
+    const unsubscribe = () => {
       const auth = getAuth(fire);
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          console.log('user', user)
-          navigation.replace('MainApp');
-        }else{
-          // replace = fungsi back tidak bisa digunakan dan auto close app
-          navigation.replace('GetStarted');
-        }
-      })
-    }, 3000);
-  }, []);
+      onAuthStateChanged(auth, user => {
+        // console.log('user', user)
+        setTimeout(() => {
+          if (user) {
+            navigation.replace('MainApp');
+          } else {
+            // replace = fungsi back tidak bisa digunakan dan auto close app
+            navigation.replace('GetStarted');
+          }
+        }, 3000);
+      });
+    };
+    return () => unsubscribe();
+  }, [navigation]);
   return (
     <View style={styles.page}>
       <ILLogo />
