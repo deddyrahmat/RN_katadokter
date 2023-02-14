@@ -20,7 +20,7 @@ export default function Register({navigation}) {
   });
 
   const onContinue = () => {
-    console.log(form);
+    // console.log(form);
     // () => navigation.navigate('UploadPhoto')
     setIsLoading(true);
     const auth = getAuth(fire);
