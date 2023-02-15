@@ -8,22 +8,25 @@ import {colors, fonts} from '../../utils';
 import fire from '../../config/fire';
 
 export default function Splash({navigation}) {
+  const unsubscribe = () => {
+    // console.log('sub')
+    const auth = getAuth(fire);
+    onAuthStateChanged(auth, user => {
+      // console.log('user', user)
+      setTimeout(() => {
+        if (user) {
+          navigation.replace('MainApp');
+        } else {
+          // replace = fungsi back tidak bisa digunakan dan auto close app
+          navigation.replace('GetStarted');
+        }
+      }, 3000);
+    });
+  };
   useEffect(() => {
-    const unsubscribe = () => {
-      const auth = getAuth(fire);
-      onAuthStateChanged(auth, user => {
-        // console.log('user', user)
-        setTimeout(() => {
-          if (user) {
-            navigation.replace('MainApp');
-          } else {
-            // replace = fungsi back tidak bisa digunakan dan auto close app
-            navigation.replace('GetStarted');
-          }
-        }, 3000);
-      });
-    };
-    return () => unsubscribe();
+    // console.log('spalsh')
+    unsubscribe()
+    // return () => unsubscribe();
   }, [navigation]);
   return (
     <View style={styles.page}>
