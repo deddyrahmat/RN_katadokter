@@ -1,11 +1,28 @@
-import { ImageBackground, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { ImageBackground, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {getDatabase, ref, child, get} from 'firebase/database';
+import React,{useEffect, useState} from 'react'
+import fire from '../../config/fire';
+
 import {ILHospitalBG} from '../../assets/illustration'
 import { colors, fonts } from './../../utils';
 import { ListHospitals } from '../../components';
-import { DummyHospital1, DummyHospital2, DummyHospital3 } from '../../assets';
 
 export default function Hospitals() {
+  const [itemHospitals, setItemHospitals] = useState([]);
+  useEffect(() => {
+    const dbRef = ref(getDatabase(fire));
+    get(child(dbRef, `hospitals/`))
+      .then(response => {
+        if (response.exists() && response.val()) {
+          setItemHospitals(response.val());
+        } else {
+          showError('No Data Available');
+        }
+      })
+      .catch(error => {
+        showError(error.message);
+      });
+  }, []);
   return (
     <View style={styles.page}>
     <ImageBackground source={ILHospitalBG} style={styles.background}>
@@ -14,9 +31,10 @@ export default function Hospitals() {
     </ImageBackground>
     {/* <ScrollView showsVerticalScrollIndicator={false}> */}
       <View style={styles.content}>
-        <ListHospitals name="Rumah Sakit Citra Bunga Merdeka" address="Jln. Surya Sejahtera 20" pic={DummyHospital1} />
-        <ListHospitals name="Rumah Sakit Anak Happy Family & Kids" address="Jln. Surya Sejahtera 20" pic={DummyHospital2} />
-        <ListHospitals name="Rumah Sakit Jiwa Tingkatan Paling Atas" address="Jln. Surya Sejahtera 20" pic={DummyHospital3} />
+      {
+        itemHospitals.length > 0 && itemHospitals.map((hospital, index) => <ListHospitals key={`hospital-${index}`} name={hospital.title} address={hospital.address} pic={hospital.image} />)
+      }
+        
       </View>
     {/* </ScrollView> */}
     </View>

@@ -2,11 +2,11 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import { colors, fonts } from '../../../utils';
 
-export default function ListHospitals({type,name,address, pic}) {
+export default function ListHospitals({name,address, pic}) {
   return (
     <View style={styles.container}>
       <View style={styles.wrapperDoctor}>
-        <Image source={pic} style={styles.image} />
+        <Image source={{uri : pic}} style={styles.image} />
         <View>
           <Text style={styles.name}>{name}</Text>
           <Text style={styles.address}>{address}</Text>
