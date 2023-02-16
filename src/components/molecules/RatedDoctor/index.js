@@ -4,6 +4,7 @@ import { IconStar} from '../../../assets';
 import { colors, fonts } from '../../../utils';
 
 export default function RatedDoctor({onPress, avatar, name, desc}) {
+  console.log('name', name)
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <View style={styles.profile}>
@@ -44,9 +45,11 @@ const styles = StyleSheet.create({
   name : {
     fontSize : 16,
     fontFamily : fonts.primary[600],
-    color : colors.text.primary
+    color : colors.text.primary,
+    textTransform : 'capitalize'
   },
   job : {
+    textTransform : 'capitalize',
     fontSize : 12,
     fontFamily : fonts.primary.normal,
     color : colors.text.secondary

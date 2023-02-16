@@ -1,6 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import {getDatabase, ref, child, get} from 'firebase/database';
+import {
+  getDatabase,
+  ref,
+  child,
+  query,
+  get,
+  orderByChild,
+  limitToLast,
+} from 'firebase/database';
 
 import {
   DoctorCategory,
@@ -20,7 +28,9 @@ import fire from '../../config/fire';
 
 export default function Doctor({navigation}) {
   const [news, setNews] = useState([]);
-  useEffect(() => {
+  const [categories, setCategories] = useState([]);
+  const [doctors, setDoctors] = useState([]);
+  const getNews = () => {
     const dbRef = ref(getDatabase(fire));
     get(child(dbRef, `news/`))
       .then(response => {
@@ -33,6 +43,51 @@ export default function Doctor({navigation}) {
       .catch(error => {
         showError(error.message);
       });
+  };
+
+  console.log('doctors', doctors);
+  const getTopRatedDoctor = () => {
+    const dbRef = ref(getDatabase(fire), `doctors/`);
+    const topRated = query(dbRef, orderByChild('rate'), limitToLast(3));
+    get(topRated)
+      .then(response => {
+        if (response.exists() && response.val()) {
+          const data = [];
+          const result = response.val();
+          Object.keys(result).map(key => {
+            data.push({
+              id : key,
+              data : result[key]
+            })
+          });
+          setDoctors(data);
+        } else {
+          showError('No Data Available');
+        }
+      })
+      .catch(error => {
+        showError(error.message);
+      });
+  };
+
+  const getCategories = () => {
+    const dbRef = ref(getDatabase(fire));
+    get(child(dbRef, `category_doctor/`))
+      .then(response => {
+        if (response.exists() && response.val()) {
+          setCategories(response.val());
+        } else {
+          showError('No Data Available');
+        }
+      })
+      .catch(error => {
+        showError(error.message);
+      });
+  };
+  useEffect(() => {
+    getNews();
+    getCategories();
+    getTopRatedDoctor();
   }, []);
   // console.log('news', news)
   return (
@@ -50,8 +105,8 @@ export default function Doctor({navigation}) {
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <View style={styles.category}>
                 <Gap width={32} />
-                {JSONCategoryDoctor.data.length > 0 &&
-                  JSONCategoryDoctor.data.map(cat => (
+                {categories.length > 0 &&
+                  categories.map(cat => (
                     <DoctorCategory
                       category={cat.category}
                       key={`list-category-${cat.id}`}
@@ -64,28 +119,30 @@ export default function Doctor({navigation}) {
           </View>
           <View style={styles.wrapperSection}>
             <Text style={styles.sectionLabel}>Top Rated Doctors</Text>
-            <RatedDoctor
-              name="Alexa Cuys"
-              desc="Dokter Anak"
-              avatar={DummyDoctor1}
-              onPress={() => navigation.navigate('DoctorProfile')}
-            />
-            <RatedDoctor
-              name="Budi Gunawan"
-              desc="Dokter Gigi"
-              avatar={DummyDoctor2}
-              onPress={() => navigation.navigate('DoctorProfile')}
-            />
-            <RatedDoctor
-              name="Ana Syalala"
-              desc="Dokter Anak"
-              avatar={DummyDoctor3}
-              onPress={() => navigation.navigate('DoctorProfile')}
-            />
+            {doctors.length > 0 && (
+              doctors.map(doctor => (
+                <RatedDoctor
+                  key={doctor.id}
+                  name={doctor.data.fullName}
+                  desc={doctor.data.profession}
+                  avatar={{uri: doctor.data.photo}}
+                  onPress={() => navigation.navigate('DoctorProfile')}
+                />
+              ))
+            )}
+
             <Text style={styles.sectionLabel}>Good News</Text>
           </View>
 
-          {news.length > 0 && news.map((data,index) => <NewsItem key={`berita-${index}`} title={data.title} date={data.date} image={data.image} />)}
+          {news.length > 0 &&
+            news.map((data, index) => (
+              <NewsItem
+                key={`berita-${index}`}
+                title={data.title}
+                date={data.date}
+                image={data.image}
+              />
+            ))}
           <Gap height={30} />
         </ScrollView>
       </View>
